@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragment.TablesFragment">
+
+    <ProgressBar
+        android:id="@+id/progressBarTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tableName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|top"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:text="Таблицы"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewRPLName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tableName"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="РПЛ"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ChampionsLeague"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="90dp"
+                android:text="Лига Чемпионов"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/EuropaLeague"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="270dp"
+                android:text="Лига Европы"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textViewClubName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRPLName"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="20dp"
+                android:text="Клуб"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="15dp"
+                 />
+
+
+            <TextView
+                android:id="@+id/textViewClubGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRPLName"
+                android:layout_marginStart="170dp"
+                android:layout_marginTop="20dp"
+                android:text="И"
+                android:textSize="15dp" />
+
+
+            <TextView
+                android:id="@+id/textViewClubWin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRPLName"
+                android:layout_marginStart="220dp"
+                android:layout_marginTop="20dp"
+                android:text="В"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:id="@+id/textViewClubDraw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRPLName"
+                android:layout_marginStart="271dp"
+                android:layout_marginTop="20dp"
+                android:text="Н"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/textViewClubLose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRPLName"
+                android:layout_marginStart="320dp"
+                android:layout_marginTop="20dp"
+                android:text="П"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:id="@+id/textViewClubPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRPLName"
+                android:layout_marginStart="365dp"
+                android:layout_marginTop="20dp"
+                android:text="О"
+                android:textSize="15dp"
+                />
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerViewTables"
+                android:layout_below="@+id/textViewClubPoints"
+                android:layout_marginTop="15dp">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+</FrameLayout>
