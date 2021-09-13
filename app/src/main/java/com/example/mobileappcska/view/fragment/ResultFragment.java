@@ -1,4 +1,4 @@
-package com.example.mobileappcska.fragment;
+package com.example.mobileappcska.view.fragment;
 
 import android.os.Bundle;
 

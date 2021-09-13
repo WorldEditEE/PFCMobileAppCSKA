@@ -1,41 +1,27 @@
- package com.example.mobileappcska.activity;
+ package com.example.mobileappcska.view.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.example.mobileappcska.adapter.ClubAdapter;
 import com.example.mobileappcska.data.Club;
-import com.example.mobileappcska.fragment.HomeFragment;
+import com.example.mobileappcska.view.fragment.HomeFragment;
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.fragment.ResultFragment;
-import com.example.mobileappcska.fragment.TablesFragment;
+import com.example.mobileappcska.view.fragment.ResultFragment;
+import com.example.mobileappcska.view.fragment.TablesFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.internal.$Gson$Preconditions;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
  public class MainActivity extends AppCompatActivity {
 

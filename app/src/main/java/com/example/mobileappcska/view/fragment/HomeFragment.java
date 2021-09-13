@@ -1,44 +1,29 @@
-package com.example.mobileappcska.fragment;
+package com.example.mobileappcska.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.mobileappcska.adapter.NewsAdapter;
+import com.example.mobileappcska.view.adapter.NewsAdapter;
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.activity.DetailNewsActivity;
-import com.example.mobileappcska.activity.addNewsActivity;
+import com.example.mobileappcska.view.activity.DetailNewsActivity;
+import com.example.mobileappcska.view.activity.addNewsActivity;
 import com.example.mobileappcska.data.News;
 import com.example.mobileappcska.data.User;
 import com.example.mobileappcska.viewmodel.AuthViewModel;
 import com.example.mobileappcska.viewmodel.NewsViewModel;
 import com.example.mobileappcska.viewmodel.UserViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;

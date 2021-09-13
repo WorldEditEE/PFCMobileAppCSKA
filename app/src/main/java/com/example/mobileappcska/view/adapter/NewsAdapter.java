@@ -1,8 +1,7 @@
-package com.example.mobileappcska.adapter;
+package com.example.mobileappcska.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,7 @@ import com.example.mobileappcska.data.News;
 import com.squareup.picasso.Picasso;
 
 import java.time.Month;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 

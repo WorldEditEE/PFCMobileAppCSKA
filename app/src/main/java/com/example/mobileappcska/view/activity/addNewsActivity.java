@@ -1,4 +1,4 @@
-package com.example.mobileappcska.activity;
+package com.example.mobileappcska.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,9 +12,7 @@ import com.example.mobileappcska.data.News;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class addNewsActivity extends AppCompatActivity {
 

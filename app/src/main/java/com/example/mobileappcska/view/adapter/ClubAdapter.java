@@ -1,4 +1,4 @@
-package com.example.mobileappcska.adapter;
+package com.example.mobileappcska.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.data.Club;
-import com.example.mobileappcska.data.News;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

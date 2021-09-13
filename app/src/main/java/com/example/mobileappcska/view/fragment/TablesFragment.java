@@ -1,4 +1,4 @@
-package com.example.mobileappcska.fragment;
+package com.example.mobileappcska.view.fragment;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -9,13 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.activity.MainActivity;
-import com.example.mobileappcska.adapter.ClubAdapter;
+import com.example.mobileappcska.view.adapter.ClubAdapter;
 import com.example.mobileappcska.data.Club;
 
 import org.jsoup.Jsoup;
