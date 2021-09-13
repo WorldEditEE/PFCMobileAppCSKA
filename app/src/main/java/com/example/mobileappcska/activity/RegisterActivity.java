@@ -3,6 +3,8 @@ package com.example.mobileappcska.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,16 +19,18 @@ import android.widget.Toast;
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.data.User;
 import com.example.mobileappcska.formattext.CurrencyTextWatcherDate;
+import com.example.mobileappcska.viewmodel.AuthViewModel;
+import com.example.mobileappcska.viewmodel.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextAge;
@@ -34,7 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView textViewLog;
     private Button buttonRegister;
     private ProgressBar progressBar;
-    private FirebaseFirestore db;
+    private AuthViewModel viewModelAuth;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(actionBar != null){
             actionBar.hide();
         }
-        mAuth = FirebaseAuth.getInstance();
+
         editTextEmail = findViewById(R.id.editTextUserLoginReg);
         editTextPassword = findViewById(R.id.editTextPasswordReg);
         editTextAge = findViewById(R.id.editTextAge);
@@ -55,7 +60,22 @@ public class RegisterActivity extends AppCompatActivity {
         textViewLog = findViewById(R.id.textViewLoginFromReg);
         buttonRegister = findViewById(R.id.buttonRegister);
         progressBar = findViewById(R.id.progressBarReg);
-        db = FirebaseFirestore.getInstance();
+
+        viewModelAuth = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getApplication())).get(AuthViewModel.class);
+
+        userViewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getApplication())).get(UserViewModel.class);
+
+        viewModelAuth.getUserData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                Intent intentSuccessReg = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intentSuccessReg);
+            }
+        });
 
         textViewLog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String age = editTextAge.getText().toString().trim();
-        String Name = editTextFIO.getText().toString().trim();
+        String name = editTextFIO.getText().toString().trim();
 
         if(email.isEmpty()){
             editTextEmail.setError("Введите ваш Email");
@@ -110,38 +130,15 @@ public class RegisterActivity extends AppCompatActivity {
             editTextAge.requestFocus();
         }
 
-        if(Name.isEmpty()){
+        if(name.isEmpty()){
             editTextFIO.setError("Введите ФИО");
             editTextFIO.requestFocus();
             return;
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(email,age,Name,"user");
-                            db.collection("users").document(mAuth.getUid()).collection(email).add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentReference> task) {
-                                    if(task.isSuccessful()){
-                                        progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(RegisterActivity.this, "Успешно", Toast.LENGTH_SHORT).show();
-                                        Intent intentSuccessReg = new Intent(RegisterActivity.this, MainActivity.class);
-                                        startActivity(intentSuccessReg);
-
-                                    }else {
-                                        Toast.makeText(RegisterActivity.this, "Ошибка при регистрации ", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
-                        }
-                    }
-                });
-
+        User user = new User(email,age,name,"user");
+        viewModelAuth.registerUser(email,password,user);
 
     }
 }

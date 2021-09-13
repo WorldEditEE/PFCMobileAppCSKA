@@ -3,6 +3,9 @@ package com.example.mobileappcska.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobileappcska.R;
+import com.example.mobileappcska.fragment.HomeFragment;
+import com.example.mobileappcska.viewmodel.AuthViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,8 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private TextView textViewRegister;
     private TextView textViewRememberPassword;
-    private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
+    private AuthViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +42,24 @@ public class LoginActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.editTextUserLogin);
         editTextPassword = findViewById(R.id.editTextPassword);
         textViewRegister = findViewById(R.id.textViewRegisterAcc);
         textViewRememberPassword = findViewById(R.id.textViewRememberPassword);
-        progressBar = findViewById(R.id.progressBarLogin);
+
+        viewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getApplication())).get(AuthViewModel.class);
+
+        viewModel.getUserData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if(firebaseUser != null){
+                    Intent intentSuccessLogin = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intentSuccessLogin);
+                }
+            }
+        });
 
         textViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intentToReg);
             }
         });
-
 
     }
 
@@ -84,27 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-
-        progressBar.setVisibility(View.VISIBLE);
-
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this, "Успешный вход", Toast.LENGTH_SHORT).show();
-                    Intent intentSuccessLogin = new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intentSuccessLogin);
-                }else {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this, "Неправильный логин или пароль", Toast.LENGTH_LONG).show();
-                    editTextPassword.setError("Проверьте пароль !");
-                    editTextEmail.setError("Проверьте логин !");
-                    editTextEmail.requestFocus();
-                    editTextPassword.requestFocus();
-                }
-            }
-        });
+        viewModel.signInUser(email, password);
 
     }
 }

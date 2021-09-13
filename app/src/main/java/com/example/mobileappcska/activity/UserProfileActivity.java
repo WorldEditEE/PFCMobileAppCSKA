@@ -3,6 +3,9 @@ package com.example.mobileappcska.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +14,10 @@ import android.widget.TextView;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.activity.MainActivity;
+import com.example.mobileappcska.data.User;
+import com.example.mobileappcska.model.UserRepository;
+import com.example.mobileappcska.viewmodel.AuthViewModel;
+import com.example.mobileappcska.viewmodel.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,9 +31,8 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView textViewName;
     private TextView textViewEmail;
     private TextView textViewAge;
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-    private FirebaseFirestore db;
+    private UserViewModel viewModelUser;
+    private AuthViewModel viewModelAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,39 +46,55 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewName = findViewById(R.id.textViewNameProfile);
         textViewEmail = findViewById(R.id.textViewEmailProfile);
         textViewAge = findViewById(R.id.textViewAgeProfile);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        db = FirebaseFirestore.getInstance();
-        initInfoProfile(user);
 
-    }
+        viewModelAuth = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getApplication())).get(AuthViewModel.class);
 
-
-    public void initInfoProfile(FirebaseUser user){
-
-        String email = user.getEmail();
-        textViewEmail.setText(email);
-        db.collection("users").document(user.getUid()).collection(email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        viewModelAuth.getUserData().observe(this, new Observer<FirebaseUser>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        String name = document.getString("name");
-                        String age = document.getString("age");
-                        textViewName.setText(name);
-                        textViewAge.setText(age);
-                    }
+            public void onChanged(FirebaseUser firebaseUser) {
+                if(firebaseUser != null){
+                    initInfoProfile(firebaseUser.getEmail());
+                }
+            }
+        });
+
+        viewModelUser = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getApplication())).get(UserViewModel.class);
+
+        viewModelUser.getUserMutableLiveData().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                textViewEmail.setText(user.getEmail());
+                textViewName.setText(user.getName());
+                textViewAge.setText(user.getAge());
+            }
+        });
+
+
+        viewModelAuth.getLoggedStatus().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    Intent intentLogOut = new Intent(UserProfileActivity.this,MainActivity.class);
+                    startActivity(intentLogOut);
                 }
             }
         });
 
     }
 
-    public void logOut(View view) {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    public void initInfoProfile(String email){
 
+        viewModelUser.getUserInfo(email);
+
+    }
+
+    public void logOut(View view) {
+
+        viewModelAuth.singOut();
     }
 
     public void backToMainFromProfile(View view) {
