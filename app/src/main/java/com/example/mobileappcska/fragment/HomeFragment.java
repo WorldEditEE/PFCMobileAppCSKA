@@ -25,6 +25,7 @@ import com.example.mobileappcska.activity.addNewsActivity;
 import com.example.mobileappcska.data.News;
 import com.example.mobileappcska.data.User;
 import com.example.mobileappcska.viewmodel.AuthViewModel;
+import com.example.mobileappcska.viewmodel.NewsViewModel;
 import com.example.mobileappcska.viewmodel.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,11 +47,11 @@ public class HomeFragment extends Fragment implements NewsAdapter.onNewsListener
 
     private List<News> newsList = new ArrayList<>();
     private FloatingActionButton actionButton;
-    private FirebaseFirestore db;
     NewsAdapter adapter;
     private UserViewModel userViewModel;
     RecyclerView recyclerView;
     private AuthViewModel viewModelAuth;
+    private NewsViewModel viewModelNews;
 
 
     @Override
@@ -61,6 +62,17 @@ public class HomeFragment extends Fragment implements NewsAdapter.onNewsListener
 
         actionButton = view.findViewById(R.id.floatingButtonAddNews);
         recyclerView = view.findViewById(R.id.recyclerViewHome);
+
+        viewModelNews = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getActivity().getApplication())).get(NewsViewModel.class);
+
+        viewModelNews.getNewsList().observe(getActivity(), new Observer<List<News>>() {
+            @Override
+            public void onChanged(List<News> news) {
+                adapter.setNews(news);
+            }
+        });
 
         viewModelAuth = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory
@@ -89,37 +101,22 @@ public class HomeFragment extends Fragment implements NewsAdapter.onNewsListener
             }
         });
 
-        db = FirebaseFirestore.getInstance();
-
         initFloatingButton(view);
         initRecyclerView(view);
 
         return view;
     }
 
+
     public void checkRole(String role){
 
         if(role.equals("admin")){
             actionButton.setVisibility(View.VISIBLE);
-//            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                @Override
-//                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                    if(dy > 0){
-//                        actionButton.setVisibility(View.GONE);
-//                    } else {
-//                        actionButton.setVisibility(View.VISIBLE);
-//                    }
-//                    super.onScrolled(recyclerView, dx, dy);
-//                }
-//            });
         }else {
             actionButton.setVisibility(View.GONE);
         }
 
-
-
     }
-
 
     public void initInfoProfile(String email){
 
@@ -150,16 +147,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.onNewsListener
     @Override
     public void onResume() {
         super.onResume();
-        db.collection("news").orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(value != null){
-                    List<News> newsList = value.toObjects(News.class);
-                    adapter.setNews(newsList);
-                }
-            }
-        });
-
+        viewModelNews.initNewsList();
     }
 
     @Override
