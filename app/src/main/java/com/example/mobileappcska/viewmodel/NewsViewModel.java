@@ -29,4 +29,8 @@ public class NewsViewModel extends AuthViewModel{
     public void initNewsList(){
         repository.initNewsList();
     }
+
+    public void addNewsList(News news){
+        repository.addNews(news);
+    }
 }

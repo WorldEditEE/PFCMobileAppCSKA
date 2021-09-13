@@ -1,11 +1,16 @@
 package com.example.mobileappcska.model;
 
 import android.app.Application;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mobileappcska.data.News;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -41,6 +46,19 @@ public class FirestoreNewsRepository {
                 if(value != null){
                     List<News> newsCSKAList = value.toObjects(News.class);
                     newsList.postValue(newsCSKAList);
+                }
+            }
+        });
+    }
+
+    public void addNews(News news){
+        database.collection("news").add(news).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(application, "Новость успешно добавлена", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(application, "Ошибка при добавлении", Toast.LENGTH_SHORT).show();
                 }
             }
         });

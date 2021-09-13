@@ -1,6 +1,7 @@
 package com.example.mobileappcska.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.data.News;
+import com.example.mobileappcska.viewmodel.AuthViewModel;
+import com.example.mobileappcska.viewmodel.NewsViewModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +23,7 @@ public class addNewsActivity extends AppCompatActivity {
     private EditText editTextHeader;
     private EditText editTextAbout;
     private EditText editTextURLToImage;
-    private FirebaseFirestore db;
+    private NewsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,9 @@ public class addNewsActivity extends AppCompatActivity {
         editTextAbout = findViewById(R.id.editTextAboutNews);
         editTextURLToImage = findViewById(R.id.editTextUrlImage);
 
-        db = FirebaseFirestore.getInstance();
-
+        viewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory
+                        .getInstance(getApplication())).get(NewsViewModel.class);
 
     }
 
@@ -44,7 +48,7 @@ public class addNewsActivity extends AppCompatActivity {
         String time = tempTime;
         
         News news = new News(header,about,urlToImage,time);
-        db.collection("news").add(news);
+        viewModel.addNewsList(news);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
