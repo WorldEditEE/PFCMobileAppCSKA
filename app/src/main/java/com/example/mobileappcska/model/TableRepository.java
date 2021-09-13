@@ -1,26 +1,11 @@
-package com.example.mobileappcska.view.fragment;
+package com.example.mobileappcska.model;
 
-import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Application;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.example.mobileappcska.R;
-import com.example.mobileappcska.view.adapter.ClubAdapter;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.mobileappcska.data.Club;
-import com.example.mobileappcska.view.adapter.NewsAdapter;
-import com.example.mobileappcska.viewmodel.NewsViewModel;
-import com.example.mobileappcska.viewmodel.TableViewModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,82 +16,37 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+public class TableRepository {
 
-public class TablesFragment extends Fragment{
+    private Application application;
+    private MutableLiveData<List<Club>> clubList;
 
-    private  Document document;
-    private  Thread secThread;
-    private  Runnable runnable;
-    private ClubAdapter clubAdapter;
-    private List<Club> clubs = new ArrayList<>();
-    private ProgressBar progressBar;
-    private RecyclerView recyclerView;
-    private TableViewModel viewModel;
+    public TableRepository(Application application){
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_tables, container, false);
-        progressBar = view.findViewById(R.id.progressBarTable);
-        //initThread(view);
-        recyclerView = view.findViewById(R.id.recyclerViewTables);
+        this.application = application;
+        clubList = new MutableLiveData<>();
 
-        viewModel = new ViewModelProvider(this,
-                ViewModelProvider.AndroidViewModelFactory
-                        .getInstance(getActivity().getApplication())).get(TableViewModel.class);
+    }
 
-        viewModel.getClubList().observe(getActivity(), new Observer<List<Club>>() {
+    public MutableLiveData<List<Club>> getClubList() {
+        return clubList;
+    }
+
+    public void initTable(){
+
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onChanged(List<Club> clubs) {
-                if(clubs != null){
-                    clubAdapter.setClubs(clubs);
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-
+            public void run() {
+                initClubList();
             }
         });
 
-        initRecyclerView(view);
-
-        return view;
-
+        thread.start();
     }
 
-    private void initRecyclerView(View view) {
+    private void initClubList(){
 
-        progressBar.setVisibility(View.VISIBLE);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        clubAdapter = new ClubAdapter(clubs);
-        recyclerView.setAdapter(clubAdapter);
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        viewModel.initTable();
-    }
-
-    public void initThread(View view){
-
-        progressBar.setVisibility(View.VISIBLE);
-
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                getWeb(view);
-            }
-        };
-
-        secThread = new Thread(runnable);
-        secThread.start();
-
-    }
-
-    private  void getWeb(View view){
+        Document document;
         String place;
         String name;
         String image;
@@ -152,26 +92,10 @@ public class TablesFragment extends Fragment{
             e.printStackTrace();
         }
         Log.d("Key 2", clubListRPL.toString());
-        //initRecyclerView(clubListRPL,view);
 
+
+        clubList.postValue(clubListRPL);
     }
-
-//    private  void initRecyclerView(List<Club> clubListRPL,View view) {
-//
-//
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                RecyclerView recyclerView = view.findViewById(R.id.recyclerViewTables);
-//                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//                recyclerView.setLayoutManager(layoutManager);
-//                ClubAdapter adapter = new ClubAdapter(clubListRPL);
-//                recyclerView.setAdapter(adapter);
-//                progressBar.setVisibility(View.GONE);
-//            }
-//        });
-//
-//    }
 
     private String getImageURL(String name){
 
@@ -235,7 +159,4 @@ public class TablesFragment extends Fragment{
 
         return null;
     }
-
-
-
 }
