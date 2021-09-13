@@ -73,13 +73,7 @@ public class TableRepository {
                 loses = elementsClub.get(7).text().trim();
                 points = elementsClub.get(10).text().trim();
                 image = getImageURL(tempName);
-//                if(wins.length() == 1 && draws.length() == 1){
-//                    draws = "  " + draws + " ";
-//                }else if(draws.length() == 1 && loses.length() == 1){
-//                    loses = loses + "   ";
-//                }else {
-//                    loses = loses + " ";
-//                }
+                
                 if(place.length() == 1){
                     place = "  " + place;
                 }
