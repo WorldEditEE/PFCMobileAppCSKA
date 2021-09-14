@@ -1,9 +1,10 @@
-package com.example.mobileappcska.model;
+package com.example.mobileappcska.model.room;
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 
 import com.example.mobileappcska.data.Club;
 
@@ -16,20 +17,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableRepository {
+public class TableRoomRepository {
 
     private Application application;
-    private MutableLiveData<List<Club>> clubList;
+    private LiveData<List<Club>> listClubLiveData;
+    private ClubsDatabase database;
+    private clubsDAO clubsDAO;
 
-    public TableRepository(Application application){
+    public TableRoomRepository(Application application){
 
         this.application = application;
-        clubList = new MutableLiveData<>();
+        database = ClubsDatabase.getInstance(application);
+        clubsDAO = database.clubsDAO();
+        listClubLiveData = clubsDAO.getAllClubs();
 
     }
 
-    public MutableLiveData<List<Club>> getClubList() {
-        return clubList;
+    public LiveData<List<Club>> getListClubLiveData() {
+        return listClubLiveData;
     }
 
     public void initTable(){
@@ -55,10 +60,11 @@ public class TableRepository {
         String draws;
         String loses;
         String points;
-        List<Club> clubListRPL = new ArrayList<>();
+        List<Club> clubsRPL = new ArrayList<>();
 
         try {
             document = Jsoup.connect("https://pfc-cska.com/matches/tables/").get();
+            clubsDAO.deleteAllClubs();
             Elements elementsFromWeb = document.getElementsByTag("tr");
             for(int i = 1 ; i < elementsFromWeb.size() ; i++){
                 Element club = elementsFromWeb.get(i);
@@ -73,22 +79,24 @@ public class TableRepository {
                 loses = elementsClub.get(7).text().trim();
                 points = elementsClub.get(10).text().trim();
                 image = getImageURL(tempName);
-                
+
                 if(place.length() == 1){
                     place = "  " + place;
                 }
                 Club clubRPL = new Club(place,name,image,games,wins,draws,loses,points);
-                clubListRPL.add(clubRPL);
+                clubsRPL.add(clubRPL);
             }
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("Key 2", clubListRPL.toString());
+        Log.d("Key 2", clubsDAO.getAllClubs().toString());
+                for(Club club : clubsRPL){
+                    clubsDAO.insert(club);
+                }
 
 
-        clubList.postValue(clubListRPL);
     }
 
     private String getImageURL(String name){
@@ -153,4 +161,5 @@ public class TableRepository {
 
         return null;
     }
+
 }

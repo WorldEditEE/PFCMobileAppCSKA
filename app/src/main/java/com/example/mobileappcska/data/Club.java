@@ -2,9 +2,18 @@ package com.example.mobileappcska.data;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+
+@Entity(tableName = "club_db")
 public class Club {
 
+    @PrimaryKey
+    @NonNull
     private String place;
+
     private String name;
     private String image;
     private String games;
@@ -13,7 +22,7 @@ public class Club {
     private String loses;
     private String points;
 
-    public Club(String place, String name, String image, String games, String wins, String draws, String loses, String points) {
+    public Club(@NonNull String place, String name, String image, String games, String wins, String draws, String loses, String points) {
         this.place = place;
         this.name = name;
         this.image = image;

@@ -13,21 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.view.adapter.ClubAdapter;
 import com.example.mobileappcska.data.Club;
-import com.example.mobileappcska.view.adapter.NewsAdapter;
-import com.example.mobileappcska.viewmodel.NewsViewModel;
-import com.example.mobileappcska.viewmodel.TableViewModel;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
+import com.example.mobileappcska.viewmodel.TableRoomViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +28,7 @@ public class TablesFragment extends Fragment{
     private List<Club> clubs = new ArrayList<>();
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    private TableViewModel viewModel;
+    private TableRoomViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,19 +40,17 @@ public class TablesFragment extends Fragment{
 
         viewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory
-                        .getInstance(getActivity().getApplication())).get(TableViewModel.class);
+                        .getInstance(getActivity().getApplication())).get(TableRoomViewModel.class);
 
-        viewModel.getClubList().observe(getActivity(), new Observer<List<Club>>() {
+        viewModel.getClubs().observe(getActivity(), new Observer<List<Club>>() {
             @Override
             public void onChanged(List<Club> clubs) {
                 if(clubs != null){
                     clubAdapter.setClubs(clubs);
                     progressBar.setVisibility(View.INVISIBLE);
                 }
-
             }
         });
-
         initRecyclerView(view);
 
         return view;
