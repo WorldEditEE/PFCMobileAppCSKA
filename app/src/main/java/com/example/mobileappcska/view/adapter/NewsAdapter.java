@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.data.News;
+import com.example.mobileappcska.model.entity.News;
 import com.squareup.picasso.Picasso;
 
 import java.time.Month;

@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mobileappcska.data.News;
-import com.example.mobileappcska.model.FirestoreNewsRepository;
+import com.example.mobileappcska.model.entity.News;
+import com.example.mobileappcska.model.repository.FirestoreNewsRepository;
 
 import java.util.List;
 

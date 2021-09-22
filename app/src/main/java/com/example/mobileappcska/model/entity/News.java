@@ -1,4 +1,4 @@
-package com.example.mobileappcska.data;
+package com.example.mobileappcska.model.entity;
 
 public class News {
 

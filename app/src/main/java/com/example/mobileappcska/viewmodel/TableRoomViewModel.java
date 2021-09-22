@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.mobileappcska.data.Club;
+import com.example.mobileappcska.model.entity.Club;
 import com.example.mobileappcska.model.room.TableRoomRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.mobileappcska.model;
+package com.example.mobileappcska.model.repository;
 
 import android.app.Application;
 import android.widget.Toast;
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mobileappcska.data.News;
+import com.example.mobileappcska.model.entity.News;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;

@@ -1,4 +1,4 @@
-package com.example.mobileappcska.formattext;
+package com.example.mobileappcska.view.formattext;
 
 import android.text.Editable;
 import android.text.TextWatcher;

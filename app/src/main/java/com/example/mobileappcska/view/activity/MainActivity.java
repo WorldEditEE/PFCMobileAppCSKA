@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.example.mobileappcska.data.Club;
+import com.example.mobileappcska.model.entity.Club;
 import com.example.mobileappcska.view.fragment.HomeFragment;
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.view.fragment.ResultFragment;

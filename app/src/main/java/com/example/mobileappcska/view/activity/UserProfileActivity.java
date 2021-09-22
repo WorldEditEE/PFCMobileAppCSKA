@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.data.User;
+import com.example.mobileappcska.model.entity.User;
 import com.example.mobileappcska.viewmodel.AuthViewModel;
 import com.example.mobileappcska.viewmodel.UserViewModel;
 import com.google.firebase.auth.FirebaseUser;

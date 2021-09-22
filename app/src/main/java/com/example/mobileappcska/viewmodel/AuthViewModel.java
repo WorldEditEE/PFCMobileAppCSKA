@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mobileappcska.data.User;
-import com.example.mobileappcska.model.AuthRepository;
+import com.example.mobileappcska.model.entity.User;
+import com.example.mobileappcska.model.repository.AuthRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthViewModel extends AndroidViewModel {
@@ -35,7 +35,7 @@ public class AuthViewModel extends AndroidViewModel {
     public void registerUser(String email, String password, User user){
 
         repository.registerUser(email,password, user);
-
+        
     }
 
     public void signInUser(String email, String password){

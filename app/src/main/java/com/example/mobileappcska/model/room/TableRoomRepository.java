@@ -1,12 +1,11 @@
 package com.example.mobileappcska.model.room;
 
 import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.mobileappcska.data.Club;
+import com.example.mobileappcska.model.entity.Club;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -51,15 +50,7 @@ public class TableRoomRepository {
 
     private void initClubList(){
 
-        Document document;
-        String place;
-        String name;
-        String image;
-        String games;
-        String wins;
-        String draws;
-        String loses;
-        String points;
+        Document document;String place;String name;String image;String games;String wins;String draws;String loses;String points;
         List<Club> clubsRPL = new ArrayList<>();
 
         try {

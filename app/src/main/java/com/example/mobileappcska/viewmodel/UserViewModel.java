@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mobileappcska.data.User;
-import com.example.mobileappcska.model.UserRepository;
+import com.example.mobileappcska.model.entity.User;
+import com.example.mobileappcska.model.repository.UserRepository;
 
 public class UserViewModel extends AndroidViewModel {
 

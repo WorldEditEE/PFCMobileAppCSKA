@@ -3,12 +3,10 @@ package com.example.mobileappcska.view.fragment;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,7 @@ import android.widget.ProgressBar;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.view.adapter.ClubAdapter;
-import com.example.mobileappcska.data.Club;
+import com.example.mobileappcska.model.entity.Club;
 import com.example.mobileappcska.viewmodel.TableRoomViewModel;
 import java.util.ArrayList;
 import java.util.List;

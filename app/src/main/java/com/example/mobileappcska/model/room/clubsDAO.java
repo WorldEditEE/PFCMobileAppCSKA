@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.mobileappcska.data.Club;
+import com.example.mobileappcska.model.entity.Club;
 
 import java.util.List;
 

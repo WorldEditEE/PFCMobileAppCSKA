@@ -1,4 +1,4 @@
-package com.example.mobileappcska.model;
+package com.example.mobileappcska.model.repository;
 
 import android.app.Application;
 import android.widget.Toast;
@@ -6,7 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mobileappcska.data.User;
+import com.example.mobileappcska.model.entity.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

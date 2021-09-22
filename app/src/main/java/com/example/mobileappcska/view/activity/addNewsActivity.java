@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.data.News;
-import com.example.mobileappcska.viewmodel.AuthViewModel;
+import com.example.mobileappcska.model.entity.News;
 import com.example.mobileappcska.viewmodel.NewsViewModel;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

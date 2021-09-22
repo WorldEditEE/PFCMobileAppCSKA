@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.mobileappcska.data.Club;
+import com.example.mobileappcska.model.entity.Club;
 
 @Database(entities = {Club.class},version = 2, exportSchema = false)
 public abstract class ClubsDatabase extends RoomDatabase {
@@ -20,7 +20,7 @@ public abstract class ClubsDatabase extends RoomDatabase {
         synchronized (LOCK){
             if(clubDatabase == null){
                 clubDatabase = Room.databaseBuilder(context, ClubsDatabase.class, DB_NAME)
-                        .fallbackToDestructiveMigration().build();
+                        .build();
             }
         }
 
