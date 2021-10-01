@@ -1,12 +1,12 @@
 package com.example.mobileappcska.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.model.entity.News;
@@ -44,6 +44,10 @@ public class addNewsActivity extends AppCompatActivity {
         String urlToImage = editTextURLToImage.getText().toString().trim();
         String tempTime = new SimpleDateFormat("yy MM dd").format(Calendar.getInstance().getTime());
         String time = tempTime;
+
+        if(urlToImage.equals("")){
+            urlToImage = "https://ic.wampi.ru/2021/06/28/tinkoff_rplcbc41b96a9badbb6.jpg";
+        }
         
         News news = new News(header,about,urlToImage,time);
         viewModel.addNewsList(news);
