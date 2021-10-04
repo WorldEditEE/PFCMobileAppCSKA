@@ -1,14 +1,14 @@
 package com.example.mobileappcska.view.activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mobileappcska.R;
 import com.example.mobileappcska.model.entity.User;
@@ -46,6 +46,7 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onChanged(FirebaseUser firebaseUser) {
                 if(firebaseUser != null){
                     initInfoProfile(firebaseUser.getEmail());
+                    viewModelUser.getUserInfo(firebaseUser.getEmail());
                 }
             }
         });
