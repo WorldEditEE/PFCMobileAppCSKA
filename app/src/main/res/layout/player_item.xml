@@ -34,6 +34,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPlayerClub" />
 
+        <Button
+            android:id="@+id/buttonAddCalendarMatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить в календарь"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlayerGoals" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

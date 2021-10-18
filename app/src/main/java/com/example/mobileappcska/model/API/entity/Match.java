@@ -1,18 +1,18 @@
-package com.example.mobileappcska.model.entity;
+package com.example.mobileappcska.model.API.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PlayerResponse {
+public class Match {
 
     @SerializedName("success")
     @Expose
     private int success;
     @SerializedName("result")
     @Expose
-    private List<Player> result = null;
+    private List<Result> result = null;
 
     public int getSuccess() {
         return success;
@@ -22,11 +22,11 @@ public class PlayerResponse {
         this.success = success;
     }
 
-    public List<Player> getResult() {
+    public List<Result> getResult() {
         return result;
     }
 
-    public void setResult(List<Player> result) {
+    public void setResult(List<Result> result) {
         this.result = result;
     }
 

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobileappcska.R;
-import com.example.mobileappcska.model.entity.Player;
+import com.example.mobileappcska.model.API.entity.Result;
 import com.example.mobileappcska.view.adapter.PlayerAdapter;
 import com.example.mobileappcska.viewmodel.FootballApiViewModel;
 
@@ -22,9 +22,9 @@ import java.util.List;
 public class ResultFragment extends Fragment {
 
     private RecyclerView recyclerViewPlayers;
-    private PlayerAdapter playerAdapter;
+    private PlayerAdapter matchesAdapter;
     private FootballApiViewModel viewModel;
-    private List<Player> playerList;
+    private List<Result> matchesList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,13 +32,13 @@ public class ResultFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
-        recyclerViewPlayers = view.findViewById(R.id.recyclerViewPlayers);
-        playerList = new ArrayList<>();
-        playerAdapter = new PlayerAdapter();
-        playerAdapter.setPlayerList(playerList);
-        recyclerViewPlayers.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewPlayers.setAdapter(playerAdapter);
 
+        recyclerViewPlayers = view.findViewById(R.id.recyclerViewPlayers);
+        matchesList = new ArrayList<>();
+        matchesAdapter = new PlayerAdapter(getActivity());
+        matchesAdapter.setPlayerList(matchesList);
+        recyclerViewPlayers.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewPlayers.setAdapter(matchesAdapter);
 
         viewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory
@@ -46,15 +46,12 @@ public class ResultFragment extends Fragment {
 
         viewModel.initPlayerList();
 
-        viewModel.getMutableLiveData().observe(getActivity(), new Observer<List<Player>>() {
+        viewModel.getMutableLiveData().observe(getActivity(), new Observer<List<Result>>() {
             @Override
-            public void onChanged(List<Player> players) {
-                playerAdapter.setPlayerList(players);
+            public void onChanged(List<Result> results) {
+                matchesAdapter.setPlayerList(results);
             }
         });
-
-
-
 
 
         return view;

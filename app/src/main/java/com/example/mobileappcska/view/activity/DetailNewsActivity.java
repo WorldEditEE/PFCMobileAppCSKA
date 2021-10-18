@@ -1,22 +1,18 @@
 package com.example.mobileappcska.view.activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobileappcska.R;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.time.Month;
-import java.util.Calendar;
 
 public class DetailNewsActivity extends AppCompatActivity {
 
@@ -71,4 +67,24 @@ public class DetailNewsActivity extends AppCompatActivity {
         textViewAbout.setText(about);
 
     }
+
+
+//
+//    public void addCalendar(View view) {
+//
+//        Intent intent = new Intent(Intent.ACTION_INSERT);
+//        intent.setData(CalendarContract.Events.CONTENT_URI);
+//        intent.putExtra(CalendarContract.Events.TITLE, "ЦСКА - СПАРТАК");
+//        intent.putExtra(CalendarContract.Events.EVENT_LOCATION,"ВЭБ АРЕНА");
+//        intent.putExtra(CalendarContract.Events.DESCRIPTION,"Главное дерби страны");
+//        intent.putExtra(CalendarContract.Events.ALL_DAY,"true");
+//
+//        startActivity(intent);
+
+//        if(intent.resolveActivity(getPackageManager()) != null){
+//            startActivity(intent);
+//        }else {
+//            Toast.makeText(getApplication(), "Error", Toast.LENGTH_SHORT).show();
+//        }
+
 }

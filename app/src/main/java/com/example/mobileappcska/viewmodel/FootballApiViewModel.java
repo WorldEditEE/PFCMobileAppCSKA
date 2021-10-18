@@ -7,13 +7,13 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mobileappcska.model.API.PlayerRepository;
-import com.example.mobileappcska.model.entity.Player;
+import com.example.mobileappcska.model.API.entity.Result;
 
 import java.util.List;
 
 public class FootballApiViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Player>> mutableLiveData;
+    private MutableLiveData<List<Result>> mutableLiveData;
     private PlayerRepository repository;
 
     public FootballApiViewModel(@NonNull Application application) {
@@ -23,7 +23,7 @@ public class FootballApiViewModel extends AndroidViewModel {
         mutableLiveData = repository.getListMutableLiveData();
     }
 
-    public MutableLiveData<List<Player>> getMutableLiveData() {
+    public MutableLiveData<List<Result>> getMutableLiveData() {
         return mutableLiveData;
 
     }

@@ -1,12 +1,11 @@
 package com.example.mobileappcska.model.API;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mobileappcska.model.entity.Player;
-import com.example.mobileappcska.model.entity.PlayerResponse;
+import com.example.mobileappcska.model.API.entity.Match;
+import com.example.mobileappcska.model.API.entity.Result;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PlayerRepository {
 
     private Application application;
-    private MutableLiveData<List<Player>> listMutableLiveData;
+    private MutableLiveData<List<Result>> listMutableLiveData;
 
     public PlayerRepository(Application application){
 
@@ -25,7 +24,7 @@ public class PlayerRepository {
         listMutableLiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<List<Player>> getListMutableLiveData() {
+    public MutableLiveData<List<Result>> getListMutableLiveData() {
         return listMutableLiveData;
     }
 
@@ -34,17 +33,17 @@ public class PlayerRepository {
         ApiFactory apiFactory = ApiFactory.getInstance();
         ApiService apiService = apiFactory.getApiService();
 
-        apiService.getPlayers().subscribeOn(Schedulers.io())
+        apiService.getMatches().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PlayerResponse>() {
+                .subscribe(new Consumer<Match>() {
                     @Override
-                    public void accept(PlayerResponse playerResponse) throws Exception {
-                        listMutableLiveData.postValue(playerResponse.getResult());
+                    public void accept(Match match) throws Exception {
+                        listMutableLiveData.postValue(match.getResult());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.d("TestkEY",throwable.getMessage());
+
                     }
                 });
     }
