@@ -9,9 +9,9 @@ import com.example.mobileappcska.model.API.entity.Result;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PlayerRepository {
 
@@ -33,18 +33,16 @@ public class PlayerRepository {
         ApiFactory apiFactory = ApiFactory.getInstance();
         ApiService apiService = apiFactory.getApiService();
 
-        apiService.getMatches().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Match>() {
-                    @Override
-                    public void accept(Match match) throws Exception {
-                        listMutableLiveData.postValue(match.getResult());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
+        apiService.getMatches().enqueue(new Callback<Match>() {
+            @Override
+            public void onResponse(Call<Match> call, Response<Match> response) {
+                listMutableLiveData.postValue(response.body().getResult());
+            }
 
-                    }
-                });
+            @Override
+            public void onFailure(Call<Match> call, Throwable t) {
+
+            }
+        });
     }
 }
